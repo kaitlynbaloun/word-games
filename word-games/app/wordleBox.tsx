@@ -1,19 +1,51 @@
 import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 
-export default function WordleBox(letter: string) {
-  return (
-    <View style={styles.box}>
-      <Text style={styles.boxText}>{letter}</Text>
-    </View>
-  );
+export enum Status {
+	Correct = 'Correct',    
+	Misplaced = 'Misplaced',  
+	Incorrect = 'Incorrect',
+	Ungraded = 'Ungraded'
+}
+
+export interface IWordleBoxProps {
+  letter: string;
+  boxStatus: Status;
+}
+
+const determineBackgroundColor = (status: Status): string => {
+	switch (status) {
+		case Status.Correct:
+			return '#6aaa64';
+		case Status.Misplaced: 
+			return 'yellow';
+		case Status.Incorrect: 
+			return 'red';
+		default: 
+			return '#00000000';
+	}
+}
+
+export default function WordleBox( { letter, boxStatus }: IWordleBoxProps ) {
+	console.log('Box status:', boxStatus);
+
+	const backgroundColor = determineBackgroundColor(boxStatus);
+  	return (
+    	<View style={[styles.box, { backgroundColor }]}>
+      		<Text style={styles.boxText}>{letter}</Text>
+    	</View>
+  	);
 }
 
 const styles = StyleSheet.create({
   box: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    borderColor: '#00000F',
+    borderWidth: 2,
+    width: 50,
+    height: 50,
+	marginHorizontal: 4
   },
   boxText: {
     fontSize: 20,
