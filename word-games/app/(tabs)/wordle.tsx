@@ -7,7 +7,7 @@ export default function BaseWordleScreen() {
     <View style={styles.container}>
       <Text style={styles.title}>Todo Wordle Buttons</Text>
       <View style={styles.centerButtons}>
-	  	<Link href="/wordleGame" asChild>
+	  	<Link href="/WordleGame" asChild>
         	<TouchableOpacity style={styles.button} onPress={() => {}}>
           		<Text style={styles.buttonText}>Left button</Text>
         	</TouchableOpacity>
