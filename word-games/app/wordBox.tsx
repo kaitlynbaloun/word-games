@@ -27,8 +27,6 @@ const determineBackgroundColor = (status: Status): string => {
 }
 
 export default function WordBox( { letter, boxStatus }: IWordBoxProps ) {
-	console.log('Box status:', boxStatus);
-
 	const backgroundColor = determineBackgroundColor(boxStatus);
   	return (
     	<View style={[styles.box, { backgroundColor }]}>
