@@ -8,7 +8,7 @@ export enum Status {
 	Ungraded = 'Ungraded'
 }
 
-export interface IWordleBoxProps {
+export interface IWordBoxProps {
   letter: string;
   boxStatus: Status;
 }
@@ -26,7 +26,7 @@ const determineBackgroundColor = (status: Status): string => {
 	}
 }
 
-export default function WordleBox( { letter, boxStatus }: IWordleBoxProps ) {
+export default function WordBox( { letter, boxStatus }: IWordBoxProps ) {
 	console.log('Box status:', boxStatus);
 
 	const backgroundColor = determineBackgroundColor(boxStatus);

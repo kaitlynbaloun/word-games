@@ -2,12 +2,12 @@ import { StyleSheet, TouchableOpacity } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import { Link } from 'expo-router';
 
-export default function BaseWordleScreen() {
+export default function BaseNeverWordScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Todo Wordle Buttons</Text>
+      <Text style={styles.title}>Todo Never Word Buttons</Text>
       <View style={styles.centerButtons}>
-	  	<Link href="/WordleGame" asChild>
+	  	<Link href="/NeverWordGame" asChild>
         	<TouchableOpacity style={styles.button} onPress={() => {}}>
           		<Text style={styles.buttonText}>Left button</Text>
         	</TouchableOpacity>

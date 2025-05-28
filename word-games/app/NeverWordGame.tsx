@@ -1,15 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import { Platform, StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import WordleBoard from './wordleBoard';
+import WordBoard from './wordBoard';
 
-export default function WordleGame() {
+export default function NeverWordGame() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Wordle</Text>
+      <Text style={styles.title}>NeverWord</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <WordleBoard enteredWords={['hello', 'goody', 'mouse', 'house' ]} correctWord='goody'/>
+      <WordBoard enteredWords={['hello', 'goody', 'mouse', 'house' ]} correctWord='goody'/>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />

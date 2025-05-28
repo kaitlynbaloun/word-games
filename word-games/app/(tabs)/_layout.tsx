@@ -1,7 +1,6 @@
 import React from 'react';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import { Tabs } from 'expo-router';
 
 import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
@@ -27,9 +26,9 @@ export default function TabLayout() {
         headerShown: useClientOnlyValue(false, true),
       }}>
       <Tabs.Screen
-        name="wordle"
+        name="neverWord"
         options={{
-          title: 'Wordle',
+          title: 'NeverWord',
           tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
           // headerRight: () => (
           //   <Link href="/modal" asChild>

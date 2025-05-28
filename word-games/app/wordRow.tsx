@@ -1,8 +1,8 @@
 import { StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
-import WordleBox, { Status } from './wordleBox';
+import WordBox, { Status } from './wordBox';
 
-export interface IWordleRowProps {
+export interface IWordRowProps {
   enteredWord: string;
   correctWord: string;
   graded: boolean;
@@ -26,12 +26,12 @@ const determineStatus = (
 
 }
 
-export default function WordleRow( { enteredWord, correctWord, graded }: IWordleRowProps ) {
-  	const wordleRow = [];
+export default function WordRow( { enteredWord, correctWord, graded }: IWordRowProps ) {
+  	const wordRow = [];
 
 	for (let boxIndex = 0; boxIndex < 5; boxIndex++) {
-		wordleRow.push(
-			<WordleBox 
+		wordRow.push(
+			<WordBox 
 				letter={enteredWord.charAt(boxIndex)} 
 				boxStatus={determineStatus(enteredWord, correctWord, boxIndex, graded)} 
 				key={boxIndex}
@@ -41,7 +41,7 @@ export default function WordleRow( { enteredWord, correctWord, graded }: IWordle
 	
 	return (
 		<View style={styles.row}>
-			{wordleRow}
+			{wordRow}
 		</View>
   	);
 }

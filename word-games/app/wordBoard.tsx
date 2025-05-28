@@ -1,18 +1,18 @@
 import { StyleSheet } from 'react-native';
 import { View } from '@/components/Themed';
-import WordleRow from './wordleRow';
+import WordRow from './wordRow';
 
-export interface IWordleBoardProps {
+export interface IWordBoardProps {
   enteredWords: string[];
   correctWord: string;
 }
 
-export default function WordleBoard( { enteredWords, correctWord }: IWordleBoardProps ) {
-  	const wordleRows = [];
+export default function WordBoard( { enteredWords, correctWord }: IWordBoardProps ) {
+  	const wordRows = [];
 
 	for (let rowIndex = 0; rowIndex < 6; rowIndex++) {
-		wordleRows.push(
-			<WordleRow 
+		wordRows.push(
+			<WordRow 
 				enteredWord={enteredWords[rowIndex] ?? ''}
 				correctWord={correctWord}
 				graded={enteredWords[rowIndex] ? true : false}
@@ -23,15 +23,14 @@ export default function WordleBoard( { enteredWords, correctWord }: IWordleBoard
 	
 	return (
 		<View style={styles.board}>
-			{wordleRows}
+			{wordRows}
 		</View>
   	);
 }
 
 const styles = StyleSheet.create({
 	board: {
-    //flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  }
+    	justifyContent: 'center',
+    	alignItems: 'center',
+	}
 });
