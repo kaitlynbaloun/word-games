@@ -45,14 +45,13 @@ const styles = StyleSheet.create({
   box: {
     alignItems: 'center',
     justifyContent: 'center',
-    borderColor: '#00000F',
-    borderWidth: 2,
-    width: 50,
+	borderRadius: 2,
     height: 50,
-	marginHorizontal: 4
+	marginHorizontal: 2
   },
   boxText: {
     fontSize: 20,
+	paddingHorizontal: 14,
     fontWeight: 'bold',
   },
 });
