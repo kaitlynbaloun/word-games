@@ -9,6 +9,9 @@ const KEYBOARD_KEYS = [
 ]
 
 export interface IKeyBoardProps {
+	guessedLetters: { 
+		[key: string]: KeyStatus 
+	}
 }
 
 export default function KeyBoard( {  }: IKeyBoardProps ) {
