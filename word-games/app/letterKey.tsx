@@ -23,7 +23,7 @@ const determineKeyColor = (status: KeyStatus): string => {
 		case KeyStatus.Incorrect: 
 			return 'red';
 		default: 
-			return '#00000000';
+			return '#D3D3D3';
 	}
 }
 

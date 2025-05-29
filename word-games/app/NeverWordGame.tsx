@@ -3,6 +3,7 @@ import { Platform, StyleSheet } from 'react-native';
 import { Text, View } from '@/components/Themed';
 import WordBoard from './wordBoard';
 import KeyBoard from './keyBoard';
+import { KeyStatus } from './letterKey';
 
 export default function NeverWordGame() {
 
@@ -12,7 +13,7 @@ export default function NeverWordGame() {
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <WordBoard enteredWords={['hello', 'goody', 'mouse', 'house' ]} correctWord='goody'/>
       <View style={styles.space} />
-      <KeyBoard />
+      <KeyBoard guessedLetters={{'A': KeyStatus.Correct}}/>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />

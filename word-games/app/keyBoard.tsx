@@ -14,17 +14,18 @@ export interface IKeyBoardProps {
 	}
 }
 
-export default function KeyBoard( {  }: IKeyBoardProps ) {
+export default function KeyBoard( { guessedLetters }: IKeyBoardProps ) {
   	const keyBoardRows = [];
 
 	for (let rowIndex = 0; rowIndex < KEYBOARD_KEYS.length; rowIndex++) {
 		const letterRow = KEYBOARD_KEYS[rowIndex];
 		const letters = [];
 		for (let letterIndex = 0; letterIndex < letterRow.length; letterIndex++) {
+			const letter = letterRow[letterIndex];
 			letters.push(
 				<LetterKey
-					letter={letterRow[letterIndex]}
-					keyStatus={KeyStatus.Correct}
+					letter={letter}
+					keyStatus={guessedLetters[letter] ?? KeyStatus.Ungraded}
 				/>
 			)
 		}
