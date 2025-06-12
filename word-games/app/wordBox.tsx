@@ -16,11 +16,11 @@ export interface IWordBoxProps {
 const determineBackgroundColor = (status: Status): string => {
 	switch (status) {
 		case Status.Correct:
-			return '#6aaa64';
+			return '#014421';
 		case Status.Misplaced: 
-			return 'yellow';
+			return '#ffa500';
 		case Status.Incorrect: 
-			return 'red';
+			return '#990f4b';
 		default: 
 			return '#00000000';
 	}
