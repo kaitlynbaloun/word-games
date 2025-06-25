@@ -11,11 +11,25 @@ const KEYBOARD_KEYS = [
 export interface IKeyBoardProps {
 	guessedLetters: { 
 		[key: string]: KeyStatus 
-	}
+	};
+	setInProgressWord: (word: string) => void;
+	inProgressWord: string;
 }
 
-export default function KeyBoard( { guessedLetters }: IKeyBoardProps ) {
+export default function KeyBoard( { guessedLetters, setInProgressWord, inProgressWord }: IKeyBoardProps ) {
   	const keyBoardRows = [];
+
+	const addLetter = (letter: string): void => {
+		if (inProgressWord.length < 5) {
+			setInProgressWord(inProgressWord + letter);
+		}
+	};
+
+	const removeLetter = (letter: string): void => {
+		if (inProgressWord.length < 5) {
+			setInProgressWord(inProgressWord.slice(0, -1));
+		}
+	};
 
 	for (let rowIndex = 0; rowIndex < KEYBOARD_KEYS.length; rowIndex++) {
 		const letterRow = KEYBOARD_KEYS[rowIndex];
