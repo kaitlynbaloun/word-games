@@ -4,13 +4,43 @@ import { Text, View } from '@/components/Themed';
 import WordBoard from './wordBoard';
 import KeyBoard from './keyBoard';
 import { KeyStatus } from './letterKey';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getRandomWord } from './dictionary/getRandomWord';
+import { Meaning } from './types/dictionaryApiResponse';
+import { getDefinitions } from './getDefinitions';
 
 export default function NeverWordGame() {
   const [enteredWords, setEnteredWords] = useState<string[]>([]);
   const [correctWord, setCorrectWord] = useState<string>(getRandomWord() ?? '');
+  const [definitions, setDefinitions] = useState<Meaning[]>([]);
   const [inProgressWord, setInProgressWord] = useState<string>('');
+
+
+  useEffect(() => {
+    const fetchDefinitions = async () => {
+      setDefinitions(await getDefinitions(correctWord));
+    };
+
+    fetchDefinitions();
+  }, [correctWord]);
+
+
+  useEffect(() => {
+    if (inProgressWord.length === 5) {
+      setEnteredWords([
+        ... enteredWords,
+        inProgressWord
+      ]);
+      setInProgressWord('');
+    }
+  }, [inProgressWord]);
+
+  
+  useEffect(() => {
+    if (enteredWords.length === 6) {
+      console.log('Game over');
+    }
+  }, [enteredWords]);
 
   return (
     <View style={styles.container}>
