@@ -25,9 +25,19 @@ export default function KeyBoard( { guessedLetters, setInProgressWord, inProgres
 		}
 	};
 
-	const removeLetter = (letter: string): void => {
+	const removeLetter = (): void => {
 		if (inProgressWord.length < 5) {
 			setInProgressWord(inProgressWord.slice(0, -1));
+		}
+	};
+
+	const keyPressAction = (letter: string): void => {
+		if (letter === 'DEL') {
+			removeLetter();
+		} else if (letter === 'ENTER') {
+			removeLetter();
+		} else {
+			addLetter(letter);
 		}
 	};
 
@@ -40,6 +50,7 @@ export default function KeyBoard( { guessedLetters, setInProgressWord, inProgres
 				<LetterKey
 					letter={letter}
 					keyStatus={guessedLetters[letter] ?? KeyStatus.Ungraded}
+					keyPressAction={keyPressAction}
 				/>
 			)
 		}

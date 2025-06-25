@@ -12,6 +12,7 @@ export enum KeyStatus {
 export interface ILetterKeyProps {
   letter: string;
   keyStatus: KeyStatus;
+  keyPressAction: (letter: string) => void;
 }
 
 const determineKeyColor = (status: KeyStatus): string => {
@@ -27,12 +28,12 @@ const determineKeyColor = (status: KeyStatus): string => {
 	}
 }
 
-export default function LetterKey( { letter, keyStatus }: ILetterKeyProps ) {
+export default function LetterKey( { letter, keyStatus, keyPressAction }: ILetterKeyProps ) {
 
 	const backgroundColor = determineKeyColor(keyStatus);
   	return (
 		<Link href="/" asChild>
-        	<TouchableOpacity style={styles.box} onPress={() => {}}>
+        	<TouchableOpacity style={styles.box} onPress={() => {keyPressAction(letter)}}>
 				<View style={[styles.box, { backgroundColor }]}>
       				<Text style={styles.boxText}>{letter}</Text>
     			</View>
