@@ -25,7 +25,24 @@ export default function NeverWordGame() {
   }, [correctWord]);
 
 
+  // useEffect(() => {
+  //   if (inProgressWord.length === 5) {
+  //     setEnteredWords([
+  //       ... enteredWords,
+  //       inProgressWord
+  //     ]);
+  //     setInProgressWord('');
+  //   }
+  // }, [inProgressWord]);
+
   useEffect(() => {
+    if (enteredWords.length === 6) {
+      console.log('Game over');
+    }
+  }, [enteredWords]);
+ 
+ 
+  const enterClickAction = (): void => {
     if (inProgressWord.length === 5) {
       setEnteredWords([
         ... enteredWords,
@@ -33,22 +50,14 @@ export default function NeverWordGame() {
       ]);
       setInProgressWord('');
     }
-  }, [inProgressWord]);
-
-
-  useEffect(() => {
-    if (enteredWords.length === 6) {
-      console.log('Game over');
-    }
-  }, [enteredWords]);
-
+  }
   return (
     <View style={styles.container}>
       <Text style={styles.title}>NeverWord</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <WordBoard enteredWords={enteredWords} correctWord={correctWord} inProgressWord={inProgressWord}/>
       <View style={styles.space} />
-      <KeyBoard guessedLetters={{'A': KeyStatus.Correct}} setInProgressWord={setInProgressWord} inProgressWord={inProgressWord}/>
+      <KeyBoard guessedLetters={{'A': KeyStatus.Correct}} setInProgressWord={setInProgressWord} inProgressWord={inProgressWord} enterClickAction={enterClickAction}/>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
