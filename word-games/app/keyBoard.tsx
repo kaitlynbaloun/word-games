@@ -14,9 +14,10 @@ export interface IKeyBoardProps {
 	};
 	setInProgressWord: (word: string) => void;
 	inProgressWord: string;
+	enterClickAction: () => void;
 }
 
-export default function KeyBoard( { guessedLetters, setInProgressWord, inProgressWord }: IKeyBoardProps ) {
+export default function KeyBoard( { guessedLetters, setInProgressWord, inProgressWord, enterClickAction }: IKeyBoardProps ) {
   	const keyBoardRows = [];
 
 	const addLetter = (letter: string): void => {
@@ -26,16 +27,14 @@ export default function KeyBoard( { guessedLetters, setInProgressWord, inProgres
 	};
 
 	const removeLetter = (): void => {
-		if (inProgressWord.length < 5) {
-			setInProgressWord(inProgressWord.slice(0, -1));
-		}
+		setInProgressWord(inProgressWord.slice(0, -1));
 	};
 
 	const keyPressAction = (letter: string): void => {
 		if (letter === 'DEL') {
 			removeLetter();
 		} else if (letter === 'ENTER') {
-			removeLetter();
+			enterClickAction();
 		} else {
 			addLetter(letter);
 		}
