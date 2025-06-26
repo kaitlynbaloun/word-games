@@ -1,25 +1,27 @@
-// const fs = require('fs');
-// const path = require('path');
+const fs = require('fs');
+const path = require('path');
 
-// const inputFile = path.join(__dirname, 'rawDictionary.txt');
-// const outputFile = path.join(__dirname, 'dictionary.txt');
+const inputFile = path.join(__dirname, 'rawDictionary.txt');
+const outputFile = path.join(__dirname, 'dictionary.ts');
 
-// fs.readFile(inputFile, 'utf8', (error: any, fileData: string) => {
-//     if (error) {
-//         console.error('Error reading scrabble.txt:', error);
-//         return;
-//     }
+fs.readFile(inputFile, 'utf8', (error: any, fileData: string) => {
+    if (error) {
+        console.error('Error reading scrabble.txt:', error);
+        return;
+    }
 
-//     const fiveLetterWords = fileData
-//         .split('\n')
-//         .map(word => word.trim())
-//         .filter(word => word.length === 5);
+    const fiveLetterWords: string[] = fileData
+        .split('\n')
+        .map(word => word.trim())
+        .filter(word => word.length === 5);
 
-//     fs.writeFile(outputFile, fiveLetterWords.join('\n'), 'utf8', (error: any) => {
-//         if (error) {
-//             console.error('Error writing dictionary.txt:', error);
-//         } else {
-//             console.log(`Successfully wrote ${fiveLetterWords.length} five-letter words to dictionary.txt`);
-//         }
-//     });
-// });
+    const tsArray = `export const dictionaryArray = ${JSON.stringify(fiveLetterWords, null, 2)};\n`;
+
+    fs.writeFile(outputFile, tsArray, 'utf8', (error: any) => {
+        if (error) {
+            console.error('Error writing dictionary.ts:', error);
+        } else {
+            console.log(`Successfully wrote ${fiveLetterWords.length} five-letter words to dictionary.ts`);
+        }
+    });
+});
