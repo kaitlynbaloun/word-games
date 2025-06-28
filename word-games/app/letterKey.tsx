@@ -33,9 +33,9 @@ export default function LetterKey( { letter, keyStatus, keyPressAction }: ILette
 	const backgroundColor = determineKeyColor(keyStatus);
   	return (
 		<TouchableOpacity style={styles.box} onPress={() => {keyPressAction(letter)}}>
-			<View style={[styles.box, { backgroundColor }]}>
-				<Text style={styles.boxText}>{letter}</Text>
-			</View>
+			{/* <View style={[styles.box, { backgroundColor }]}> */}
+			<Text style={styles.boxText}>{letter}</Text>
+			{/* </View> */}
 		</TouchableOpacity>
   	);
 }
