@@ -18,11 +18,11 @@ export interface ILetterKeyProps {
 const determineKeyColor = (status: KeyStatus): string => {
 	switch (status) {
 		case KeyStatus.Correct:
-			return '#6aaa64';
+			return '#014421';
 		case KeyStatus.Misplaced: 
-			return 'yellow';
+			return '#ffa500';
 		case KeyStatus.Incorrect: 
-			return 'red';
+			return '#990f4b';
 		default: 
 			return '#D3D3D3';
 	}
