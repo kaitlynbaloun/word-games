@@ -7,5 +7,5 @@ export const getRandomWord = (): string | undefined => {
     }
 
     const randomIndex = Math.floor(Math.random() * dictionaryArray.length);
-    return dictionaryArray[randomIndex];
+    return dictionaryArray[randomIndex].toUpperCase();
 }

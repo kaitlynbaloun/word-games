@@ -37,7 +37,7 @@ export default function NeverWordGame() {
 
   useEffect(() => {
     if (enteredWords.length === 6) {
-      console.log('Game over');
+      console.log(`Game over. Word: ${correctWord}`);
     }
   }, [enteredWords]);
  
@@ -50,14 +50,39 @@ export default function NeverWordGame() {
       ]);
       setInProgressWord('');
     }
+  };
+
+  const determineKeyStatus = (
+    enteredWord: string,
+    index: number
+  ) => {
+    if (enteredWord.charAt(index) === correctWord.charAt(index)) {
+      return KeyStatus.Correct;
+    } else if (correctWord.includes(enteredWord.charAt(index))) {
+      return KeyStatus.Misplaced;
+    } else {
+      return KeyStatus.Incorrect;
+    }
   }
+
+  const constructGuessedLettersMap = (): { [key: string]: KeyStatus } => {
+    const guessedLetters: {[key: string]: KeyStatus } = {};
+    for (const word of enteredWords) {
+      for (let letterIndex = 0; letterIndex < word.length; letterIndex++) {
+        guessedLetters[word[letterIndex].toUpperCase()] = determineKeyStatus(word, letterIndex);
+      }
+    }
+    return guessedLetters;
+  };
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>NeverWord</Text>
       <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
       <WordBoard enteredWords={enteredWords} correctWord={correctWord} inProgressWord={inProgressWord}/>
       <View style={styles.space} />
-      <KeyBoard guessedLetters={{'A': KeyStatus.Correct}} setInProgressWord={setInProgressWord} inProgressWord={inProgressWord} enterClickAction={enterClickAction}/>
+      <KeyBoard guessedLetters={constructGuessedLettersMap()} setInProgressWord={setInProgressWord} inProgressWord={inProgressWord} enterClickAction={enterClickAction}/>
 
       {/* Use a light status bar on iOS to account for the black space above the modal */}
       <StatusBar style={Platform.OS === 'ios' ? 'light' : 'auto'} />
