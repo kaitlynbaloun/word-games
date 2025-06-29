@@ -1,7 +1,5 @@
-import { StyleSheet, TouchableOpacity } from 'react-native';
-import { Text, View } from '@/components/Themed';
-import { Link } from 'expo-router';
-
+import { Pressable, StyleSheet } from 'react-native';
+import { Text } from '@/components/Themed';
 export enum KeyStatus {
 	Correct = 'Correct',    
 	Misplaced = 'Misplaced',  
@@ -32,11 +30,11 @@ export default function LetterKey( { letter, keyStatus, keyPressAction }: ILette
 
 	const backgroundColor = determineKeyColor(keyStatus);
   	return (
-		<TouchableOpacity style={styles.box} onPress={() => {keyPressAction(letter)}}>
+		<Pressable style={styles.box} onPress={() => {keyPressAction(letter)}}>
 			{/* <View style={[styles.box, { backgroundColor }]}> */}
 			<Text style={styles.boxText}>{letter}</Text>
 			{/* </View> */}
-		</TouchableOpacity>
+		</Pressable>
   	);
 }
 
