@@ -27,3 +27,7 @@ export const getRandomWord = (): string | undefined => {
     const randomIndex = Math.floor(Math.random() * dictionaryArray.length);
     return dictionaryArray[randomIndex].toUpperCase();
 }
+
+export const verifyWordIsValid = (possibleWord: string): boolean => {
+    return dictionaryArray.includes(possibleWord);
+} 

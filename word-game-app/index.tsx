@@ -1,12 +1,12 @@
 import { Platform, StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import WordBoard from '../../components/wordBoard';
-import KeyBoard from '../../components/keyBoard';
-import { KeyStatus } from '../../components/letterKey';
+import WordBoard from './components/wordBoard';
+import KeyBoard from './components/keyBoard';
+import { KeyStatus } from './components/letterKey';
 import { useEffect, useState } from 'react';
-import { Meaning } from '../../types/dictionaryApiResponse';
-import { getDefinitions, getRandomWord } from '../../helpers/dictionaryHelpers';
+import { Meaning } from './types/dictionaryApiResponse';
+import { getDefinitions, getRandomWord, verifyWordIsValid } from './helpers/dictionaryHelpers';
 
 export default function NeverWordGame() {
   const [enteredWords, setEnteredWords] = useState<string[]>([]);
@@ -23,17 +23,6 @@ export default function NeverWordGame() {
     fetchDefinitions();
   }, [correctWord]);
 
-
-  // useEffect(() => {
-  //   if (inProgressWord.length === 5) {
-  //     setEnteredWords([
-  //       ... enteredWords,
-  //       inProgressWord
-  //     ]);
-  //     setInProgressWord('');
-  //   }
-  // }, [inProgressWord]);
-
   useEffect(() => {
     if (enteredWords.length === 6) {
       console.log(`Game over. Word: ${correctWord}`);
@@ -43,11 +32,16 @@ export default function NeverWordGame() {
  
   const enterClickAction = (): void => {
     if (inProgressWord.length === 5) {
-      setEnteredWords([
-        ... enteredWords,
-        inProgressWord
-      ]);
-      setInProgressWord('');
+      if (verifyWordIsValid(inProgressWord)) {
+        setEnteredWords([
+          ... enteredWords,
+          inProgressWord
+        ]);
+        setInProgressWord('');
+      } else {
+        console.log(`${inProgressWord} is not a valid word in the scrabble dictionary`)
+        // notify somehow visually
+      }
     }
   };
 
