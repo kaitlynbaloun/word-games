@@ -1,10 +1,10 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, useWindowDimensions } from 'react-native';
 
 export enum Status {
-	Correct = 'Correct',    
-	Misplaced = 'Misplaced',  
-	Incorrect = 'Incorrect',
-	Ungraded = 'Ungraded'
+  Correct = 'Correct',
+  Misplaced = 'Misplaced',
+  Incorrect = 'Incorrect',
+  Ungraded = 'Ungraded'
 }
 
 export interface IWordBoxProps {
@@ -13,25 +13,41 @@ export interface IWordBoxProps {
 }
 
 const determineBackgroundColor = (status: Status): string => {
-	switch (status) {
-		case Status.Correct:
-			return '#014421';
-		case Status.Misplaced: 
-			return '#ffa500';
-		case Status.Incorrect: 
-			return '#990f4b';
-		default: 
-			return '#00000000';
-	}
-}
+  switch (status) {
+    case Status.Correct:
+      return '#ADEBB3';
+    case Status.Misplaced:
+      return '#ffa500';
+    case Status.Incorrect:
+      return '#A9A9A9';
+    default:
+      return '#00000000';
+  }
+};
 
-export default function WordBox( { letter, boxStatus }: IWordBoxProps ) {
-	const backgroundColor = determineBackgroundColor(boxStatus);
-  	return (
-    	<View style={[styles.box, { backgroundColor }]}>
-      		<Text style={styles.boxText}>{letter}</Text>
-    	</View>
-  	);
+export default function WordBox({ letter, boxStatus }: IWordBoxProps) {
+  const { width } = useWindowDimensions();
+  const scaleFactor = width / 390;
+
+  const backgroundColor = determineBackgroundColor(boxStatus);
+
+  const boxSize = Math.min(40 * scaleFactor, 48);
+  const fontSize = Math.min(24 * scaleFactor, 22);
+
+  return (
+    <View
+      style={[
+        styles.box,
+        {
+          backgroundColor,
+          width: boxSize,
+          height: boxSize,
+        },
+      ]}
+    >
+      <Text style={[styles.boxText, { fontSize }]}>{letter}</Text>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -40,12 +56,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderColor: '#00000F',
     borderWidth: 2,
-    width: 50,
-    height: 50,
-	marginHorizontal: 4
+    marginHorizontal: 4,
   },
   boxText: {
-    fontSize: 20,
     fontWeight: 'bold',
   },
 });

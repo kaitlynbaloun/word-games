@@ -1,9 +1,10 @@
-import { StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { StyleSheet, TouchableOpacity, Text, useWindowDimensions } from 'react-native';
+
 export enum KeyStatus {
-	Correct = 'Correct',    
-	Misplaced = 'Misplaced',  
-	Incorrect = 'Incorrect',
-	Ungraded = 'Unguessed'
+  Correct = 'Correct',
+  Misplaced = 'Misplaced',
+  Incorrect = 'Incorrect',
+  Ungraded = 'Unguessed'
 }
 
 export interface ILetterKeyProps {
@@ -13,42 +14,56 @@ export interface ILetterKeyProps {
 }
 
 const determineKeyColor = (status: KeyStatus): string => {
-	switch (status) {
-		case KeyStatus.Correct:
-			return '#014421';
-		case KeyStatus.Misplaced: 
-			return '#ffa500';
-		case KeyStatus.Incorrect: 
-			return '#990f4b';
-		default: 
-			return '#D3D3D3';
-	}
-}
+  switch (status) {
+    case KeyStatus.Correct:
+      return '#ADEBB3';
+    case KeyStatus.Misplaced:
+      return '#ffa500';
+    case KeyStatus.Incorrect:
+      return '#A9A9A9';
+    default:
+      return '#D3D3D3';
+  }
+};
 
-export default function LetterKey( { letter, keyStatus, keyPressAction }: ILetterKeyProps ) {
+export default function LetterKey({ letter, keyStatus, keyPressAction }: ILetterKeyProps) {
+  const { width } = useWindowDimensions();
+  const scaleFactor = width / 390;
 
-	const backgroundColor = determineKeyColor(keyStatus);
-  	return (
-		<TouchableOpacity role='button' style={[styles.box, { backgroundColor }]} onPress={() => {keyPressAction(letter)}}>
-			{/* <View style={[styles.box, { backgroundColor }]}> */}
-			<Text style={styles.boxText}>{letter}</Text>
-			{/* </View> */}
-		</TouchableOpacity>
-  	);
+  const backgroundColor = determineKeyColor(keyStatus);
+
+  const height = Math.min(40 * scaleFactor, 44);
+  const paddingHorizontal = Math.min(8 * scaleFactor, 16);
+  const borderRadius = Math.min(4 * scaleFactor, 4);
+  const fontSize = Math.min(20 * scaleFactor, 18);
+
+  return (
+    <TouchableOpacity
+      role="button"
+      style={[
+        styles.box,
+        {
+          backgroundColor,
+          height,
+          paddingHorizontal,
+          borderRadius,
+        },
+      ]}
+      onPress={() => keyPressAction(letter)}
+    >
+      <Text style={[styles.boxText, { fontSize }]}>{letter}</Text>
+    </TouchableOpacity>
+  );
 }
 
 const styles = StyleSheet.create({
   box: {
     alignItems: 'center',
     justifyContent: 'center',
-	borderRadius: 2,
-    height: 50,
-	marginHorizontal: 2,
-	zIndex: 9999
+    marginHorizontal: 2,
+    zIndex: 9999,
   },
   boxText: {
-    fontSize: 20,
-	paddingHorizontal: 14,
     fontWeight: 'bold',
   },
 });

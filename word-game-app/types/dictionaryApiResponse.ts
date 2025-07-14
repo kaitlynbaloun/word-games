@@ -3,7 +3,7 @@ interface Phonetic {
     audio: string;
 }
 
-interface Definition {
+export interface Definition {
     definition: string;
     example: string;
     synonyms: string[];

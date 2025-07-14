@@ -1,0 +1,32 @@
+export default {
+  expo: {
+    name: "word-game-app",
+    slug: "word-game-app",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./assets/images/icon.png",
+    scheme: "wordgameapp",
+    userInterfaceStyle: "automatic",
+    newArchEnabled: true,
+    ios: {
+      supportsTablet: true
+    },
+    android: {
+      adaptiveIcon: {
+        foregroundImage: "./assets/images/adaptive-icon.png",
+        backgroundColor: "#ffffff"
+      },
+      edgeToEdgeEnabled: true
+    },
+    web: {
+      bundler: "metro",
+      favicon: "./assets/images/favicon.png"//,
+      //publicUrl: "/word-games/"
+    },
+    assetBundlePatterns: ["**/*"],
+    plugins: [],
+    experiments: {
+      baseUrl: "/word-games"
+    }
+  }
+}

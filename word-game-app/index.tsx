@@ -1,4 +1,4 @@
-import { Platform, StyleSheet } from 'react-native';
+import { Button, Modal, Platform, StyleSheet } from 'react-native';
 import { Text, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import WordBoard from './components/wordBoard';
@@ -7,12 +7,14 @@ import { KeyStatus } from './components/letterKey';
 import { useEffect, useState } from 'react';
 import { Meaning } from './types/dictionaryApiResponse';
 import { getDefinitions, getRandomWord, verifyWordIsValid } from './helpers/dictionaryHelpers';
+import GameOverModal from './components/gameOverModal';
 
 export default function NeverWordGame() {
   const [enteredWords, setEnteredWords] = useState<string[]>([]);
   const [correctWord, setCorrectWord] = useState<string>(getRandomWord() ?? '');
   const [definitions, setDefinitions] = useState<Meaning[]>([]);
   const [inProgressWord, setInProgressWord] = useState<string>('');
+  const [modalIsVisible, setModalIsVisible] = useState(false);
 
 
   useEffect(() => {
@@ -24,8 +26,9 @@ export default function NeverWordGame() {
   }, [correctWord]);
 
   useEffect(() => {
-    if (enteredWords.length === 6) {
+    if (enteredWords.length === 6 || enteredWords[enteredWords.length - 1] === correctWord) {
       console.log(`Game over. Word: ${correctWord}`);
+      setModalIsVisible(true);
     }
   }, [enteredWords]);
  
@@ -44,6 +47,12 @@ export default function NeverWordGame() {
       }
     }
   };
+
+  const startNewGame = (): void => {
+    setCorrectWord(getRandomWord() ?? '');
+    setEnteredWords([]);
+    setInProgressWord('');
+  }
 
   const determineKeyStatus = (
     enteredWord: string,
@@ -71,8 +80,17 @@ export default function NeverWordGame() {
 
   return (
     <View style={styles.container}>
+      <GameOverModal 
+        enteredWords={enteredWords} 
+        correctWord={correctWord} 
+        isGameWon={enteredWords[enteredWords.length - 1] === correctWord} 
+        isVisible={modalIsVisible} 
+        definitions={definitions} 
+        setVisibility={(visible: boolean) => setModalIsVisible(visible)}
+        startNewGame={() => startNewGame()}
+      ></GameOverModal>
       <Text style={styles.title}>NeverWord</Text>
-      <View style={styles.separator} />
+      <View style={styles.space} />
       <WordBoard enteredWords={enteredWords} correctWord={correctWord} inProgressWord={inProgressWord}/>
       <View style={styles.space} />
       <KeyBoard guessedLetters={constructGuessedLettersMap()} setInProgressWord={setInProgressWord} inProgressWord={inProgressWord} enterClickAction={enterClickAction}/>
@@ -101,5 +119,5 @@ const styles = StyleSheet.create({
   space: {
     marginVertical: 10,
     height: 1,
-  },
+  }
 });

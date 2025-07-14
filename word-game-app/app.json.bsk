@@ -20,12 +20,10 @@
     },
     "web": {
       "bundler": "metro",
-      "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "basePath": "/word-games"
     },
-    "plugins": [],
-    "experiments": {
-      "typedRoutes": true
-    }
+    "assetBundlePatterns": ["**/*"],
+    "plugins": []
   }
 }
