@@ -4,17 +4,21 @@ import { StatusBar } from 'expo-status-bar';
 import WordBoard from './components/wordBoard';
 import KeyBoard from './components/keyBoard';
 import { KeyStatus } from './components/letterKey';
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import { Meaning } from './types/dictionaryApiResponse';
 import { getDefinitions, getRandomWord, verifyWordIsValid } from './helpers/dictionaryHelpers';
 import GameOverModal from './components/gameOverModal';
+
+const ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' ];
 
 export default function NeverWordGame() {
   const [enteredWords, setEnteredWords] = useState<string[]>([]);
   const [correctWord, setCorrectWord] = useState<string>(getRandomWord() ?? '');
   const [definitions, setDefinitions] = useState<Meaning[]>([]);
   const [inProgressWord, setInProgressWord] = useState<string>('');
-  const [modalIsVisible, setModalIsVisible] = useState(false);
+  const [modalIsVisible, setModalIsVisible] = useState<boolean>(false);
+  const [hintsLeftCount, setHintsLeftCount] = useState<number>(3);
+  const [invalidLettersGivenAsHints, setInvalidLettersGivenAsHints] = useState<string[]>([]);
 
 
   useEffect(() => {
@@ -54,6 +58,22 @@ export default function NeverWordGame() {
     setInProgressWord('');
   }
 
+  const useHint = (): void => {
+    const unusedInvalidLetters = ALPHABET.filter((letter) => enteredWords.some((word) => !word.includes(letter)) && !correctWord.includes(letter));
+    if (unusedInvalidLetters.length > 0) {
+      const unusedInvalidHintLetter = unusedInvalidLetters[Math.floor(Math.random() * unusedInvalidLetters.length)]
+      console.log(`${unusedInvalidHintLetter} is not used in the word`);
+      setInvalidLettersGivenAsHints([...invalidLettersGivenAsHints, unusedInvalidHintLetter]);
+      //update in key
+      //notify somehow visually
+    } else {
+      //give some other kind of hint
+      console.log('Any unused letters are included in your');
+    }
+    
+    setHintsLeftCount(hintsLeftCount - 1);
+  }
+
   const determineKeyStatus = (
     enteredWord: string,
     index: number
@@ -74,6 +94,9 @@ export default function NeverWordGame() {
         guessedLetters[word[letterIndex].toUpperCase()] = determineKeyStatus(word, letterIndex);
       }
     }
+    for (const letter of invalidLettersGivenAsHints) {
+      guessedLetters[letter.toUpperCase()] = KeyStatus.Incorrect;
+    }
     return guessedLetters;
   };
 
@@ -89,7 +112,6 @@ export default function NeverWordGame() {
         setVisibility={(visible: boolean) => setModalIsVisible(visible)}
         startNewGame={() => startNewGame()}
       ></GameOverModal>
-      <Text style={styles.title}>NeverWord</Text>
       <View style={styles.space} />
       <WordBoard enteredWords={enteredWords} correctWord={correctWord} inProgressWord={inProgressWord}/>
       <View style={styles.space} />

@@ -1,5 +1,5 @@
 import { Meaning, Definition } from '@/types/dictionaryApiResponse';
-import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Dimensions, Modal, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export interface IGameOverModalProps {
   enteredWords: string[];
@@ -12,6 +12,8 @@ export interface IGameOverModalProps {
 }
 
 export default function GameOverModal( { isGameWon, correctWord, enteredWords, isVisible, setVisibility, startNewGame, definitions }: IGameOverModalProps ) {
+	const screenHeight = Dimensions.get('window').height;
+	
 	function flattenMeanings(meanings: Meaning[]): Definition[] {
 		return meanings.flatMap(meaning => meaning.definitions);
 	}
@@ -27,7 +29,7 @@ export default function GameOverModal( { isGameWon, correctWord, enteredWords, i
         <View style={styles.modalOverlay}>
           <View style={styles.modalBox}>
 			<Text style={styles.modalText}>{isGameWon ? 'You Won!' : 'Game Over.'}</Text>
-			<View style={styles.modalContainer}>
+			<ScrollView style={{maxHeight: screenHeight * 0.75, ...styles.modalContainer}}>
 				<Text style={styles.correctWordText}>{correctWord}</Text>
 				{
 					parsedDefinitions.length === 0 ?
@@ -62,7 +64,7 @@ export default function GameOverModal( { isGameWon, correctWord, enteredWords, i
 						
 					)
 				}
-			</View>
+			</ScrollView>
             <TouchableOpacity
 				style={styles.button}
 				onPress={() => {
@@ -123,7 +125,6 @@ const styles = StyleSheet.create({
 		borderRadius: 8,
 		padding: 10,
 		minWidth: '95%',
-		overflow: 'scroll'
 	  },
 	  correctWordText: {
 		fontSize: 24,
