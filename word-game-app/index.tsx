@@ -64,13 +64,11 @@ export default function NeverWordGame() {
       const unusedInvalidHintLetter = unusedInvalidLetters[Math.floor(Math.random() * unusedInvalidLetters.length)]
       console.log(`${unusedInvalidHintLetter} is not used in the word`);
       setInvalidLettersGivenAsHints([...invalidLettersGivenAsHints, unusedInvalidHintLetter]);
-      //update in key
       //notify somehow visually
     } else {
       //give some other kind of hint
       console.log('Any unused letters are included in your');
     }
-    
     setHintsLeftCount(hintsLeftCount - 1);
   }
 
